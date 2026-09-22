@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Propina - Nancy Araceli | Estilist</title>
+<title>Propina - Nancy Araceli | Estilista</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
   :root {
@@ -457,7 +457,7 @@
     <div class="perrito">🐶</div>
     <div class="mensaje-perrito">
       ¡Gracias por tu propina!<br>
-      <small style="color: var(--text-secondary);"> 💕</small>
+      <small style="color: var(--text-secondary);">Me haces muy feliz 💕</small>
     </div>
   </div>
 
@@ -474,17 +474,18 @@
 
 <!-- Botón de descarga -->
 <div class="controles">
-  <button class="btn" onclick="descargarImagen()">📸 Descargar Imagen</button>
+  <button class="btn" onclick="descargarImagen()"> Descargar Imagen</button>
 </div>
 
 <script>
   const CLABE_NUMEROS = "012180015503194947";
   const CLABE_FORMATO = "0121 8001 5503 1949 47";
+  const URL_PAGINA = "https://keidenv2.github.io/nancy-propina/";
 
   // ===== Cargar QR =====
   function cargarQR() {
     const qrImg = document.getElementById('qr-img');
-    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=260x260&data=${CLABE_NUMEROS}&color=1a1a2e&bgcolor=ffffff&margin=10`;
+    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=260x260&data=${encodeURIComponent(URL_PAGINA)}&color=1a1a2e&bgcolor=ffffff&margin=10`;
     
     fetch(qrUrl)
       .then(response => response.blob())
@@ -512,8 +513,8 @@
       gainNode.connect(audioCtx.destination);
       
       oscillator.type = 'sine';
-      oscillator.frequency.setValueAtTime(880, audioCtx.currentTime); // La5
-      oscillator.frequency.exponentialRampToValueAtTime(1320, audioCtx.currentTime + 0.1); // Mi6
+      oscillator.frequency.setValueAtTime(880, audioCtx.currentTime);
+      oscillator.frequency.exponentialRampToValueAtTime(1320, audioCtx.currentTime + 0.1);
       
       gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
       gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
@@ -585,7 +586,6 @@
       return;
     }
     
-    // Ocultar botón de descarga temporalmente
     const controles = document.querySelector('.controles');
     controles.style.display = 'none';
     
