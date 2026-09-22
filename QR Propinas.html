@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Propina - Nancy Araceli | Estilista</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+  :root {
+    --bg-gradient-1: #0a0a0a;
+    --bg-gradient-2: #1a1a2e;
+    --bg-gradient-3: #0f3460;
+    --card-bg: linear-gradient(145deg, #ffffff 0%, #fff5f7 50%, #f0f8ff 100%);
+    --text-primary: #1a1a2e;
+    --text-secondary: #666;
+    --clabe-bg: linear-gradient(135deg, #1a1a2e, #0f3460);
+    --clabe-text: #ffd700;
+    --shadow-color: rgba(255, 215, 0, 0.3);
+    --shadow-color-2: rgba(0, 188, 212, 0.2);
+    --instrucciones-bg: rgba(0, 188, 212, 0.1);
+    --perrito-bg: linear-gradient(135deg, #fff0f5, #f0f8ff);
+    --toggle-bg: #1a1a2e;
+    --toggle-text: white;
+  }
+
+  [data-theme="dark"] {
+    --bg-gradient-1: #000000;
+    --bg-gradient-2: #0a0a1a;
+    --bg-gradient-3: #051530;
+    --card-bg: linear-gradient(145deg, #1a1a2e 0%, #2a1a3e 50%, #0f3460 100%);
+    --text-primary: #ffffff;
+    --text-secondary: #cccccc;
+    --clabe-bg: linear-gradient(135deg, #000000, #0a0a1a);
+    --clabe-text: #ffd700;
+    --shadow-color: rgba(255, 215, 0, 0.4);
+    --shadow-color-2: rgba(0, 188, 212, 0.3);
+    --instrucciones-bg: rgba(0, 188, 212, 0.15);
+    --perrito-bg: linear-gradient(135deg, #2a1a3e, #1a1a2e);
+    --toggle-bg: #ffd700;
+    --toggle-text: #1a1a2e;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    padding: 20px;
+    background: linear-gradient(135deg, var(--bg-gradient-1), var(--bg-gradient-2), var(--bg-gradient-3));
+    background-size: 400% 400%;
+    animation: fondoAnimado 12s ease infinite;
+    transition: all 0.5s ease;
+  }
+
+  @keyframes fondoAnimado {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* Toggle modo oscuro */
+  .theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--toggle-bg);
+    color: var(--toggle-text);
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 1.5em;
+    cursor: pointer;
+    z-index: 100;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    transition: all 0.3s;
+  }
+  .theme-toggle:hover { transform: scale(1.1) rotate(15deg); }
+
+  /* ===== TARJETA PRINCIPAL ===== */
+  .tarjeta {
+    background: var(--card-bg);
+    border-radius: 35px;
+    padding: 45px 30px 35px;
+    max-width: 440px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    box-shadow: 
+      0 0 0 3px #ffd700,
+      0 0 0 6px #00bcd4,
+      0 30px 90px var(--shadow-color),
+      0 30px 90px var(--shadow-color-2);
+    transition: all 0.5s ease;
+  }
+
+  /* Inicial N gigante */
+  .inicial {
+    position: absolute;
+    top: -45px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 6.5em;
+    font-weight: 900;
+    font-family: 'Georgia', serif;
+    background: linear-gradient(135deg, #ffd700 0%, #ff69b4 50%, #00bcd4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    filter: drop-shadow(0 5px 15px rgba(255, 215, 0, 0.4));
+  }
+
+  .nombre {
+    margin-top: 25px;
+    font-size: 1.7em;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: 1px;
+    transition: color 0.5s;
+  }
+
+  .subtitulo {
+    font-size: 0.9em;
+    color: #00bcd4;
+    font-weight: 600;
+    margin-top: 5px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  /* QR más grande */
+  .qr-container {
+    display: inline-block;
+    padding: 18px;
+    background: white;
+    border-radius: 22px;
+    margin: 25px 0;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    border: 2px solid #ffd700;
+  }
+
+  #qr-img {
+    width: 260px;
+    height: 260px;
+    display: block;
+    margin: 0 auto;
+  }
+
+  /* CLABE separada en grupos de 4 */
+  .clabe-label {
+    font-size: 0.75em;
+    color: var(--text-secondary);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    transition: color 0.5s;
+  }
+
+  .clabe-box {
+    background: var(--clabe-bg);
+    color: var(--clabe-text);
+    padding: 14px 18px;
+    border-radius: 12px;
+    font-size: 1.2em;
+    font-weight: bold;
+    letter-spacing: 3px;
+    font-family: 'Courier New', monospace;
+    margin: 8px 0;
+    transition: all 0.5s;
+  }
+
+  /* BOTÓN COPIAR con efecto hover brillante */
+  .btn-copiar {
+    background: linear-gradient(135deg, #ffd700, #ff69b4);
+    color: white;
+    border: none;
+    padding: 14px 35px;
+    border-radius: 50px;
+    font-size: 1.05em;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 15px 0;
+    box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-copiar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    transition: left 0.5s;
+  }
+
+  .btn-copiar:hover::before {
+    left: 100%;
+  }
+
+  .btn-copiar:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.6);
+  }
+
+  .btn-copiar:active {
+    transform: scale(0.95);
+  }
+
+  .mensaje-copiado {
+    color: #4caf50;
+    font-size: 0.95em;
+    font-weight: bold;
+    margin-top: 5px;
+    display: none;
+  }
+
+  .mensaje-copiado.visible {
+    display: block;
+    animation: aparecer 0.5s ease;
+  }
+
+  @keyframes aparecer {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Logo BBVA */
+  .banco-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+
+  .bbva-logo {
+    width: 60px;
+    height: auto;
+  }
+
+  .banco-texto {
+    font-size: 1em;
+    color: #004494;
+    font-weight: 800;
+    letter-spacing: 1px;
+  }
+
+  [data-theme="dark"] .banco-texto {
+    color: #4da6ff;
+  }
+
+  /* Perrito */
+  .perrito-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: var(--perrito-bg);
+    border: 2px dashed #ff69b4;
+    border-radius: 20px;
+    padding: 14px;
+    margin-top: 15px;
+    transition: all 0.5s;
+  }
+
+  .perrito {
+    font-size: 2.8em;
+    animation: perritoMovimiento 3s ease-in-out infinite;
+  }
+
+  @keyframes perritoMovimiento {
+    0%, 100% { transform: rotate(-5deg) scale(1); }
+    50% { transform: rotate(5deg) scale(1.1); }
+  }
+
+  .mensaje-perrito {
+    font-size: 0.9em;
+    color: #c2185b;
+    font-weight: 600;
+    text-align: left;
+    line-height: 1.4;
+  }
+
+  [data-theme="dark"] .mensaje-perrito {
+    color: #ff80ab;
+  }
+
+  /* Tijeras animadas */
+  .tijera {
+    position: absolute;
+    font-size: 2.5em;
+    z-index: 5;
+  }
+  .tijera-izq {
+    top: 25%;
+    left: -20px;
+    animation: tijeraIzq 4s ease-in-out infinite;
+  }
+  .tijera-der {
+    bottom: 25%;
+    right: -20px;
+    animation: tijeraDer 4s ease-in-out infinite;
+  }
+
+  @keyframes tijeraIzq {
+    0%, 100% { transform: rotate(-20deg) translateY(0); }
+    50% { transform: rotate(20deg) translateY(-12px); }
+  }
+  @keyframes tijeraDer {
+    0%, 100% { transform: rotate(20deg) translateY(0); }
+    50% { transform: rotate(-20deg) translateY(-12px); }
+  }
+
+  /* Brillos animados */
+  .brillo {
+    position: absolute;
+    font-size: 1.6em;
+    animation: pulsarBrillo 2.5s ease-in-out infinite;
+  }
+  .b1 { top: 12%; left: 8%; animation-delay: 0s; }
+  .b2 { top: 12%; right: 8%; animation-delay: 0.6s; }
+  .b3 { bottom: 12%; left: 12%; animation-delay: 1.2s; }
+  .b4 { bottom: 12%; right: 12%; animation-delay: 1.8s; }
+
+  @keyframes pulsarBrillo {
+    0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.7; }
+    50% { transform: scale(1.4) rotate(15deg); opacity: 1; }
+  }
+
+  /* Instrucciones */
+  .instrucciones {
+    margin-top: 20px;
+    padding: 15px;
+    background: var(--instrucciones-bg);
+    border-radius: 15px;
+    border: 2px solid #00bcd4;
+    transition: all 0.5s;
+  }
+
+  .instrucciones h3 {
+    color: #00bcd4;
+    font-size: 1em;
+    margin-bottom: 10px;
+  }
+
+  .instrucciones p {
+    color: var(--text-secondary);
+    font-size: 0.85em;
+    line-height: 1.6;
+    text-align: left;
+    transition: color 0.5s;
+  }
+
+  /* Botón de descarga */
+  .controles {
+    margin-top: 30px;
+    text-align: center;
+  }
+
+  .btn {
+    padding: 14px 28px;
+    border: none;
+    border-radius: 50px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    color: white;
+    background: linear-gradient(135deg, #ffd700, #ff69b4);
+    box-shadow: 0 5px 20px rgba(255, 105, 180, 0.4);
+  }
+
+  .btn:hover { transform: translateY(-3px); }
+  .btn:active { transform: scale(0.95); }
+
+  /* Partículas flotantes de fondo */
+  .particula {
+    position: fixed;
+    width: 8px; height: 8px;
+    background: radial-gradient(circle, #ffd700, transparent);
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0.5;
+    z-index: -1;
+  }
+  .p1 { top: 10%; left: 15%; animation: flotar 6s ease-in-out infinite; }
+  .p2 { top: 30%; left: 85%; animation: flotar 8s ease-in-out infinite 1s; }
+  .p3 { top: 60%; left: 10%; animation: flotar 7s ease-in-out infinite 2s; }
+  .p4 { top: 80%; left: 90%; animation: flotar 9s ease-in-out infinite 0.5s; }
+  .p5 { top: 45%; left: 5%; animation: flotar 6.5s ease-in-out infinite 1.5s; }
+  .p6 { top: 20%; left: 50%; animation: flotar 7.5s ease-in-out infinite 2.5s; }
+
+  @keyframes flotar {
+    0%, 100% { transform: translateY(0) scale(1); opacity: 0.3; }
+    50% { transform: translateY(-40px) scale(1.5); opacity: 0.8; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Partículas de fondo -->
+<div class="particula p1"></div>
+<div class="particula p2"></div>
+<div class="particula p3"></div>
+<div class="particula p4"></div>
+<div class="particula p5"></div>
+<div class="particula p6"></div>
+
+<!-- Botón modo oscuro/claro -->
+<button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</button>
+
+<!-- TARJETA -->
+<div class="tarjeta" id="tarjeta">
+  <div class="inicial">N</div>
+  
+  <div class="tijera tijera-izq">✂️</div>
+  <div class="tijera tijera-der">✂️</div>
+  
+  <div class="brillo b1">✨</div>
+  <div class="brillo b2">✨</div>
+  <div class="brillo b3">💫</div>
+  <div class="brillo b4">⭐</div>
+
+  <div class="nombre">Nancy Araceli</div>
+  <div class="subtitulo">✂ Estilista ✂</div>
+
+  <!-- QR grande -->
+  <div class="qr-container">
+    <img id="qr-img" alt="QR Code">
+  </div>
+
+  <div class="clabe-label">CLABE Interbancaria</div>
+  <div class="clabe-box" id="clabeBox">0121 8001 5503 1949 47</div>
+  
+  <button class="btn-copiar" onclick="copiarClabe()">📋 COPIAR CLABE</button>
+  <div class="mensaje-copiado" id="mensajeCopiado">✅ ¡Copiada al portapapeles!</div>
+
+  <!-- Logo BBVA real -->
+  <div class="banco-container">
+    <svg class="bbva-logo" viewBox="0 0 100 40" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100" height="40" rx="8" fill="#004494"/>
+      <text x="50" y="28" font-family="Arial, sans-serif" font-size="18" font-weight="900" fill="white" text-anchor="middle" letter-spacing="2">BBVA</text>
+    </svg>
+    <span class="banco-texto">Banco BBVA</span>
+  </div>
+
+  <div class="perrito-container">
+    <div class="perrito">🐶</div>
+    <div class="mensaje-perrito">
+      ¡Gracias por tu propina!<br>
+      <small style="color: var(--text-secondary);"> 💕</small>
+    </div>
+  </div>
+
+  <div class="instrucciones">
+    <h3>📱 ¿Cómo funciona?</h3>
+    <p>
+      1. Escanea el QR con tu cámara<br>
+      2. Toca "Copiar" en la notificación<br>
+      3. Pega la CLABE en tu app del banco<br>
+      ¡Listo! 💕
+    </p>
+  </div>
+</div>
+
+<!-- Botón de descarga -->
+<div class="controles">
+  <button class="btn" onclick="descargarImagen()">📸 Descargar Imagen</button>
+</div>
+
+<script>
+  const CLABE_NUMEROS = "012180015503194947";
+  const CLABE_FORMATO = "0121 8001 5503 1949 47";
+
+  // ===== Cargar QR =====
+  function cargarQR() {
+    const qrImg = document.getElementById('qr-img');
+    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=260x260&data=${CLABE_NUMEROS}&color=1a1a2e&bgcolor=ffffff&margin=10`;
+    
+    fetch(qrUrl)
+      .then(response => response.blob())
+      .then(blob => {
+        const reader = new FileReader();
+        reader.onloadend = function() {
+          qrImg.src = reader.result;
+        }
+        reader.readAsDataURL(blob);
+      })
+      .catch(err => {
+        console.error('Error cargando QR:', err);
+        qrImg.src = qrUrl;
+      });
+  }
+
+  // ===== Sonido "ding" con Web Audio API =====
+  function reproducirDing() {
+    try {
+      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const oscillator = audioCtx.createOscillator();
+      const gainNode = audioCtx.createGain();
+      
+      oscillator.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+      
+      oscillator.type = 'sine';
+      oscillator.frequency.setValueAtTime(880, audioCtx.currentTime); // La5
+      oscillator.frequency.exponentialRampToValueAtTime(1320, audioCtx.currentTime + 0.1); // Mi6
+      
+      gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
+      
+      oscillator.start(audioCtx.currentTime);
+      oscillator.stop(audioCtx.currentTime + 0.5);
+    } catch (e) {
+      console.log('Audio no soportado');
+    }
+  }
+
+  // ===== Copiar CLABE =====
+  function copiarClabe() {
+    navigator.clipboard.writeText(CLABE_NUMEROS).then(() => {
+      const mensaje = document.getElementById("mensajeCopiado");
+      mensaje.classList.add("visible");
+      reproducirDing();
+      
+      if (navigator.vibrate) navigator.vibrate(100);
+      
+      setTimeout(() => mensaje.classList.remove("visible"), 2500);
+    }).catch(() => {
+      const textArea = document.createElement("textarea");
+      textArea.value = CLABE_NUMEROS;
+      textArea.style.position = "fixed";
+      textArea.style.left = "-999999px";
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textArea);
+      
+      const mensaje = document.getElementById("mensajeCopiado");
+      mensaje.classList.add("visible");
+      reproducirDing();
+      
+      setTimeout(() => mensaje.classList.remove("visible"), 2500);
+    });
+  }
+
+  // ===== Modo oscuro/claro =====
+  function toggleTheme() {
+    const html = document.documentElement;
+    const btn = document.getElementById("themeBtn");
+    
+    if (html.getAttribute('data-theme') === 'dark') {
+      html.removeAttribute('data-theme');
+      btn.textContent = '🌙';
+      localStorage.setItem('theme', 'light');
+    } else {
+      html.setAttribute('data-theme', 'dark');
+      btn.textContent = '☀️';
+      localStorage.setItem('theme', 'dark');
+    }
+  }
+
+  // Cargar tema guardado
+  if (localStorage.getItem('theme') === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.getElementById("themeBtn").textContent = '☀️';
+  }
+
+  // ===== Descargar imagen =====
+  function descargarImagen() {
+    const tarjeta = document.getElementById("tarjeta");
+    const qrImg = document.getElementById('qr-img');
+    
+    if (!qrImg.src || qrImg.src === window.location.href) {
+      alert('⏳ Espera a que cargue el QR...');
+      return;
+    }
+    
+    // Ocultar botón de descarga temporalmente
+    const controles = document.querySelector('.controles');
+    controles.style.display = 'none';
+    
+    html2canvas(tarjeta, {
+      backgroundColor: '#ffffff',
+      scale: 2,
+      useCORS: true,
+      allowTaint: true,
+      logging: false
+    }).then(canvas => {
+      const link = document.createElement('a');
+      link.download = 'Nancy-Propina-QR.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+      
+      controles.style.display = 'block';
+      alert('✅ ¡Imagen descargada!');
+    }).catch(err => {
+      console.error('Error:', err);
+      controles.style.display = 'block';
+      alert('❌ Error. Intenta de nuevo.');
+    });
+  }
+
+  // Inicializar
+  cargarQR();
+</script>
+
+</body>
+</html>
